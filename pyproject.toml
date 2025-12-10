@@ -1,0 +1,20 @@
+[project]
+name = "dsa_lib"
+version = "0.1.0"
+description = "A custom DSA solution library"
+authors = [{name = "Vivek Kumar"}]
+dependencies = []  # Add external libraries here (e.g., "numpy")
+readme = "README.md"
+requires-python = ">=3.9"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["dsa_lib"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
