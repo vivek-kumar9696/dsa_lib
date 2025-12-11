@@ -1,5 +1,10 @@
 import pytest
-from dsa_lib.strings import fizzbuzz, longest_common_prefix  # Import the function
+from dsa_lib.strings import (
+    fizzbuzz,
+    longest_common_prefix,
+    encode_string,
+    decode_string,
+)  # Import the function
 
 # --------------------------------Start FizzBuzz---------------------------------------------
 
@@ -113,3 +118,33 @@ def test_lcp_first_char_mismatch():
 
 
 # ----------------------------------End Longest Common Prefix----------------------------------------
+
+# --------------------------------------Start Encode Decode String--------------------------------------
+
+
+@pytest.mark.parametrize(
+    "original_list",
+    [
+        # Case 1: Simple words
+        (["hello", "world"]),
+        # Case 2: Single word
+        (["algorithm"]),
+        # Case 3: Empty string in the list
+        (["", "test", ""]),
+        # Case 4: Special characters and numbers
+        (["#", "123", " "]),
+        # Case 5: Empty list
+        ([]),
+        # Case 6: Strings with maximum supported length (15 chars for 4-bit header)
+        (["a" * 15, "b" * 5]),
+    ],
+)
+def test_encode_decode_logic(original_list):
+    """
+    Verifies that decoding the encoded string returns exactly the original list.
+    """
+    encoded = encode_string(original_list)
+    decoded = decode_string(encoded)
+    assert decoded == original_list
+
+    # ------------------------End Encode Decode String---------------------
