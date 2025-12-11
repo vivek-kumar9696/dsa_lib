@@ -4,8 +4,6 @@ from typing import List
 def longest_common_prefix(words: List[str]) -> str:
     if len(words) == 0:
         return ""
-    elif len(words) == 1:
-        return words[0]
 
     prefix = words[0]
 
