@@ -1,5 +1,5 @@
 import pytest
-from dsa_lib.strings import fizzbuzz  # Import the function
+from dsa_lib.strings import fizzbuzz, longest_common_prefix  # Import the function
 
 # --------------------------------Start FizzBuzz---------------------------------------------
 
@@ -61,3 +61,55 @@ def test_fizzbuzz_large_input_length():
 
 
 # ------------------------------End FizzBuzz---------------------------------------------
+
+
+# -------------------------------Start Longest Common Prefix--------------------------------
+@pytest.mark.parametrize(
+    "strs, expected",
+    [
+        # Case 1: Standard common prefix
+        (["flower", "flow", "flight"], "fl"),
+        # Case 2: No common prefix exists
+        (["dog", "racecar", "car"], ""),
+        # Case 3: All strings are identical
+        (["testing", "testing", "testing"], "testing"),
+        # Case 4: One string is a prefix of another
+        (["ab", "abc", "abcd"], "ab"),
+        # Case 5: List contains an empty string (result should be empty)
+        (["flower", "flow", ""], ""),
+        # Case 6: Single character match
+        (["a", "ac"], "a"),
+        # Case 7: Very short strings matching
+        (["c", "c"], "c"),
+    ],
+)
+def test_longest_common_prefix_standard(strs, expected):
+    """
+    Tests standard scenarios including matches, no matches, and partial matches.
+    """
+    assert longest_common_prefix(strs) == expected
+
+
+def test_lcp_empty_list():
+    """
+    Edge Case: The input list is empty. Should return an empty string.
+    """
+    assert longest_common_prefix([]) == ""
+
+
+def test_lcp_single_string():
+    """
+    Edge Case: The list contains only one string. The prefix is the string itself.
+    """
+    assert longest_common_prefix(["single"]) == "single"
+
+
+def test_lcp_first_char_mismatch():
+    """
+    Specific check: If the very first characters differ, return empty string immediately.
+    """
+    strs = ["apple", "banana", "pear"]
+    assert longest_common_prefix(strs) == ""
+
+
+# ----------------------------------End Longest Common Prefix----------------------------------------
