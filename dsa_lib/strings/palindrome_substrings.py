@@ -13,3 +13,7 @@ def checkPalindrome(text: str, left: int, right: int) -> int:
         right += 1
         count += 1
     return count
+
+
+if __name__ == "__main__":
+    assert find_palindrome_substrings("abc") == 3

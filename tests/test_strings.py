@@ -5,6 +5,7 @@ from dsa_lib.strings import (
     encode_string,
     decode_string,
     find_palindrome_substrings,
+    find_longest_palindrome,
 )  # Import the function
 
 # --------------------------------Start FizzBuzz---------------------------------------------
@@ -193,3 +194,57 @@ def test_encode_decode_logic(original_list):
         assert find_palindrome_substrings("abacaba") == 12
 
     # --------------------------------End Palindromic Substring-----------------------------
+
+    # ---------------------- Start Longest Palindrome Substring-----------------------
+
+
+@pytest.mark.parametrize(
+    "text, expected_options",
+    [
+        # Case 1: Standard odd-length palindrome
+        ("babad", ["bab", "aba"]),  # Both are valid answers usually
+        # Case 2: Standard even-length palindrome
+        ("cbbd", ["bb"]),
+        # Case 3: Entire string is a palindrome
+        ("racecar", ["racecar"]),
+        # Case 4: No multi-char palindrome (return first char)
+        (
+            "abcde",
+            ["a", "b", "c", "d", "e"],
+        ),  # Or any single char depending on implementation
+        # Case 5: Two palindromes of equal length (usually return the first one found)
+        ("abacdfgdc", ["aba", "cdc"]),
+        # Case 6: Single character
+        ("a", ["a"]),
+    ],
+)
+def test_longest_palindrome_standard(text, expected_options):
+    """
+    Checks if the result is one of the valid longest palindromes.
+    """
+    result = find_longest_palindrome(text)
+    assert result in expected_options
+
+
+def test_longest_palindrome_empty():
+    """
+    Edge Case: Empty string input.
+    Should return empty string.
+    """
+    assert find_longest_palindrome("") == ""
+
+
+def test_longest_palindrome_all_same():
+    """
+    Case: All characters are the same.
+    Input: "aaaa" -> Output: "aaaa"
+    """
+    assert find_longest_palindrome("aaaa") == "aaaa"
+
+
+def test_longest_palindrome_trailing_leading():
+    """
+    Case: Palindrome is at the very end or start.
+    """
+    # Palindrome "abba" is at the end
+    assert find_longest_palindrome("xyzabba") == "abba"
