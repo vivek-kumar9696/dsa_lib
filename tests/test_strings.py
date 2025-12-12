@@ -4,6 +4,7 @@ from dsa_lib.strings import (
     longest_common_prefix,
     encode_string,
     decode_string,
+    find_palindrome_substrings,
 )  # Import the function
 
 # --------------------------------Start FizzBuzz---------------------------------------------
@@ -148,3 +149,47 @@ def test_encode_decode_logic(original_list):
     assert decoded == original_list
 
     # ------------------------End Encode Decode String---------------------
+    # ------------------------------Start Palindromic Substring-------------
+
+    @pytest.mark.parametrize(
+        "text, expected_count",
+        [
+            # Case 1: Standard string, no multi-char palindromes
+            # Substrings: "a", "b", "c"
+            ("abc", 3),
+            # Case 2: Simple odd-length palindrome
+            # Substrings: "a", "b", "a", "aba"
+            ("aba", 4),
+            # Case 3: Even-length palindrome
+            # Substrings: "a", "b", "b", "a", "bb", "abba"
+            ("abba", 6),
+            # Case 4: All characters identical
+            # Substrings: "a", "a", "a", "aa", "aa", "aaa"
+            ("aaa", 6),
+            # Case 5: Single character
+            # Substrings: "z"
+            ("z", 1),
+            # Case 6: Empty string
+            ("", 0),
+        ],
+    )
+    def test_palindrome_count(text, expected_count):
+        """
+        Verifies the total count of palindromic substrings.
+        """
+        assert find_palindrome_substrings(text) == expected_count
+
+    def test_palindrome_complex_mix():
+        """
+        Test a mix of overlapping palindromes.
+        String: "abacaba"
+        Palindromes:
+        1-char: a, b, a, c, a, b, a (7)
+        3-char: aba, aca, aba (3)
+        5-char: bacab (1)
+        7-char: abacaba (1)
+        Total: 12
+        """
+        assert find_palindrome_substrings("abacaba") == 12
+
+    # --------------------------------End Palindromic Substring-----------------------------
