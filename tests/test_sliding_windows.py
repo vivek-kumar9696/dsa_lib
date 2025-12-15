@@ -2,9 +2,11 @@ import pytest
 from dsa_lib.sliding_windows import (
     buy_sell_stocks,
     sliding_window_max_bf,
+    find_perms,
 )  # Import the function
 
 
+# -------------------------------------Start Sliding Window Max ------------------------------------
 # The "Table" of test cases
 @pytest.mark.parametrize(
     "prices, expected",
@@ -52,3 +54,49 @@ def test_sliding_window_max_bf(arr, k, expected):
     # Call the sliding_window_max_bf function and compare the result to the expected output
     result = sliding_window_max_bf(arr, k)
     assert result == expected
+
+
+# ----------------------------End Sliding Window Max-----------------------------
+
+# ---------------------------------Start Permutation of String ------------------------
+
+
+@pytest.mark.parametrize(
+    "src_str, tgt_str, expected",
+    [
+        # Case 1: Permutation is at the very beginning (Passes with current bug)
+        ("abcefg", "abc", True),
+        ("bacdef", "abc", True),  # 'bac' is perm of 'abc'
+        # Case 2: Permutation is in the middle
+        ("eidbaooo", "ab", True),  # 'ba' is found at index 3
+        ("aaacb", "abc", True),  # 'acb' is found at index 2
+        # Case 3: Permutation is at the very end (FAILS with current bug)
+        ("oooobac", "abc", True),
+        # Case 4: No permutation exists
+        ("eidboaoo", "ab", False),
+        ("hello", "xyz", False),
+        # Case 5: Target is longer than Source (Should be False)
+        ("abc", "abcd", False),
+        # Case 6: Exact Match
+        ("abc", "abc", True),
+    ],
+)
+def test_find_perms_logic(src_str, tgt_str, expected):
+    """
+    Verifies if a permutation of tgt_str exists in src_str.
+    """
+    assert find_perms(src_str, tgt_str) == expected
+
+
+def test_large_input():
+    """
+    Performance/Logic check for larger strings.
+    """
+    src = "a" * 1000 + "b" + "a" * 1000
+    tgt = "ab"  # Permutation 'ba' exists in the middle
+
+    # This will fail unless the loop range is fixed
+    assert find_perms(src, tgt)
+
+
+# ------------------------------------End Permutation of String ----------------------------------------
